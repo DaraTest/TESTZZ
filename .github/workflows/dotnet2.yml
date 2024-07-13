@@ -1,4 +1,4 @@
-name: .NET CI 44
+name: .NET CI
 
 on:
   push:
@@ -31,10 +31,14 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
 
-    # Build the solution
+    # Set environment variable for architecture
+    - name: Set architecture
+      run: echo "DOTNET_HOST_X64=1" >> $GITHUB_ENV
+
+    # Build the solution in Release configuration
     - name: Build solution
       run: dotnet build --configuration Release
 
-    # Run tests
+    # Run tests in Release configuration
     - name: Run tests
       run: dotnet test --configuration Release
