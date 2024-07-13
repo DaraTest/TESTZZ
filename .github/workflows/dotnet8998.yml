@@ -1,0 +1,31 @@
+name: .NET Framework CI8989
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4.0.1
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore src/TESTneu2.sln
+
+    - name: Build solution
+      run: dotnet build src/TESTneu2.sln --configuration Release
+
+    - name: Run tests
+      run: dotnet test src/TESTneu2.sln --configuration Release
