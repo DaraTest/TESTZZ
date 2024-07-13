@@ -13,29 +13,19 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    # Check out the repository
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    # Set up .NET
     - name: Setup .NET
       uses: actions/setup-dotnet@v4.0.1
       with:
         dotnet-version: 8.0.x
 
-    # Change to the directory containing the solution if necessary
-    # (uncomment the next lines if the solution is not in the root directory)
-    - name: Change Directory
-      run: cd ./src
-
-    # Restore dependencies
     - name: Restore dependencies
-      run: dotnet restore ./src/TESTneu2.sln # adjust the path if necessary
+      run: dotnet restore src/TESTneu2.sln
 
-    # Build the solution
     - name: Build solution
-      run: dotnet build ./src/TESTneu2.sln --configuration Release # adjust the path if necessary
+      run: dotnet build src/TESTneu2.sln --configuration Release
 
-    # Run tests
     - name: Run tests
-      run: dotnet test ./src/TESTneu2.sln --configuration Release # adjust the path if necessary
+      run: dotnet test src/TESTneu2.sln --configuration Release
