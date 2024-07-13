@@ -1,0 +1,34 @@
+name: .NET CI 2
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4.0.1
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Change directory to src
+        run: cd ./src
+
+      - name: Restore dependencies
+        run: dotnet restore ./TESTneu2.sln
+
+      - name: Build solution
+        run: dotnet build ./Solution --configuration Release
+
+      - name: Run tests
+        run: dotnet test ./Solution --configuration Release
