@@ -1,0 +1,40 @@
+name: .NET CI 96
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    # Check out the repository
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # Set up .NET
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4.0.1
+      with:
+        dotnet-version: 8.0.x
+
+    # Change directory to the folder containing the solution file
+    - name: Change directory to src
+      run: cd src
+
+    # Restore dependencies
+    - name: Restore dependencies
+      run: dotnet restore
+
+    # Build the solution in Release configuration
+    - name: Build solution
+      run: dotnet build --configuration Release --runtime win-x64
+
+    # Run tests in Release configuration
+    - name: Run tests
+      run: dotnet test --configuration Release --runtime win-x64
