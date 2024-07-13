@@ -1,0 +1,36 @@
+name: .NET CI First TEST
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      # Check out the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Set up .NET
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4.0.1
+        with:
+          dotnet-version: 8.0.x
+
+      # Restore dependencies
+      - name: Restore dependencies
+        run: dotnet restore src
+
+      # Build the solution
+      - name: Build solution
+        run: dotnet build src --no-restore
+
+      # Run tests
+      - name: Run tests
+        run: dotnet test src --no-build --verbosity normal
